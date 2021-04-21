@@ -2,11 +2,9 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.mapper.NoteMapper;
 import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
-import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
+import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class NoteService {
@@ -21,22 +19,22 @@ public class NoteService {
         this.noteMapper = noteMapper;
     }
 
-    public void addNote(String title, String description, String username) {
-        Integer userId = userMapper.findByUsername(username).getUserId();
-        Notes note = new Notes(0, title, description, userId);
-        noteMapper.insertNote(note, userId);
+    public void addNote(String title, String description, String userName) {
+        Integer userId = userMapper.getUser(userName).getUserId();
+        Note note = new Note(0, title, description, userId);
+        noteMapper.insert(note);
     }
 
-    public List<Notes> getNoteLists(Integer userId) {
-        return noteMapper.findByUserId(userId);
+    public Note[] getNoteListings(Integer userId) {
+        return noteMapper.getNotesForUser(userId);
     }
 
-    public void addNote(Notes note, Integer userid) {
-        noteMapper.insertNote(note, userid);
+    public Note getNote(Integer noteId) {
+        return noteMapper.getNote(noteId);
     }
 
-    public void updateNote(Notes note) {
-        noteMapper.updateNote(note);
+    public void updateNote(Integer noteId, String title, String description) {
+        noteMapper.updateNote(noteId, title, description);
     }
 
     public void deleteNote(Integer noteid) {

@@ -12,7 +12,7 @@
         <div class="container">
             <div id="logoutDiv">
                 <form action="#" th:action="@{/logout}" method="POST">
-                    <button type="submit" class="btn btn-secondary float-right">Logout</button>
+                    <button type="submit" class="btn btn-secondary float-right" id="btnLogout">Logout</button>
                 </form>
             </div>
             <div id="contentDiv" style="clear: right;">
@@ -51,8 +51,10 @@
                                 <tbody>
                                 <tr th:each="file : ${files}">
                                     <td>
-                                        <a class="btn btn-success" th:href="${file.dataURL}" th:download="${file.filename}">View</a>
-                                        <a class="btn btn-danger" th:href="@{/files/delete(id=${file.fileid})}">Delete</a>
+                                        <a target="_blank" class="btn btn-success"
+                                           th:href="@{/home/get-file/{file}(file = ${file})}">View</a>
+                                        <a class="btn btn-danger"
+                                           th:href="@{/files/delete-file/{file}(file = ${file})}">Delete</a>
                                     </td>
                                     <th scope="row" th:text="${file}">ExampleFile.txt</th>
                                 </tr>
@@ -175,7 +177,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#" method="POST" th:action="@{/credential/add-credential}" th:object="${newCredential}}">
+                                        <form action="#" method="POST" th:action="@{/credential/add-credential}" th:object="${newCredential}">
                                             <input type="hidden" name="credentialId" th:field="*{credentialId}" id="credential-id">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">URL</label>

@@ -2,12 +2,11 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.mapper.CredentialMapper;
 import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
-import com.udacity.jwdnd.course1.cloudstorage.model.Credentials;
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,45 +15,32 @@ public class CredentialService {
     private CredentialMapper credentialMapper;
 
     @Autowired
-    private EncryptionService encryptionService;
-
-    @Autowired
     private UserMapper userMapper;
 
     public CredentialService(UserMapper userMapper, CredentialMapper credentialMapper) {
         this.userMapper= userMapper;
+        this.credentialMapper = credentialMapper;
     }
 
-    private Credentials encryptPassword(Credentials credential) {
-        SecureRandom random = new SecureRandom();
-        String key = random.toString();
-        credential.setKey(key);
-        credential.setPassword(encryptionService.encryptValue(credential.getPassword(), key));
-        return credential;
+    public void addCredential(String url, String userName, String credentialUserName, String key, String password) {
+        Integer userId = userMapper.getUser(userName).getUserId();
+        Credential credential = new Credential(0, url, credentialUserName, key, password, userId);
+        credentialMapper.insert(credential);
     }
 
-    public Credentials decryptPassword(Credentials credential) {
-        credential.setPassword(encryptionService.decryptValue(credential.getPassword(), credential.getKey()));
-        return credential;
+    public Credential[] getCredentialListings(Integer userId) {
+        return credentialMapper.getCredentialListings(userId);
     }
 
-    public List<Credentials> getAllCredentials(Integer userid) throws Exception {
-        List<Credentials> credentials = credentialMapper.findByUserId(userid);
-        if (credentials == null) {
-            throw new Exception();
-        }
-        return credentials.stream().map(this::decryptPassword).collect(Collectors.toList());
-    }
-
-    public void addCredential(Credentials credential, Integer userid) {
-        credentialMapper.insertCredentials(encryptPassword(credential), userid);
-    }
-
-    public void updateCredential(Credentials credential) {
-        credentialMapper.updateCredentials(encryptPassword(credential));
+    public Credential getCredential(Integer credentialId) {
+        return credentialMapper.getCredential(credentialId);
     }
 
     public void deleteCredential(Integer credentialid) {
         credentialMapper.deleteCredentials(credentialid);
+    }
+
+    public void updateCredential(Integer credentialId, String userName, String url, String key, String password) {
+        credentialMapper.updateCredential(credentialId, userName, url, key, password);
     }
 }

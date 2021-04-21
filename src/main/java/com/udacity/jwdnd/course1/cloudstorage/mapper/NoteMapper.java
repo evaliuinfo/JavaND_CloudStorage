@@ -1,32 +1,27 @@
 package com.udacity.jwdnd.course1.cloudstorage.mapper;
 
-import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import com.udacity.jwdnd.course1.cloudstorage.model.Note;
+import com.udacity.jwdnd.course1.cloudstorage.model.User;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
-@Repository
 public interface NoteMapper {
+    @Select("SELECT * FROM NOTES WHERE userid = #{userId}")
+    Note[] getNotesForUser(Integer userId);
+
     @Select("SELECT * FROM NOTES")
-    List<Notes> findAll();
+    Note[] getNoteListings();
 
-    @Select("SELECT * FROM NOTES WHERE noteid = #{noteid}")
-    public Notes findNote(Integer noteid);
+    @Insert("INSERT INTO NOTES (notetitle, notedescription, userid) VALUES(#{noteTitle}, #{noteDescription}, #{userId})")
+    @Options(useGeneratedKeys = true, keyProperty = "noteId")
+    Integer insert(Note note);
 
-    @Select("SELECT * FROM NOTES WHERE userid = #{userid}")
-    public List<Notes> findByUserId(Integer userid);
-
-    @Select("INSERT INTO NOTES (notetitle, notedescription, userid) VALUES (#{note.notetitle}, #{note.notedescription}, #{userid})")
-    public Integer insertNote(Notes note, Integer userid);
+    @Select("SELECT * FROM NOTES WHERE noteid = #{noteId}")
+    Note getNote(Integer noteId);
 
     @Delete("DELETE FROM NOTES WHERE noteid = #{noteid}")
-    public Integer deleteNote(Integer noteid);
+    void deleteNote(Integer noteid);
 
-    @Update("UPDATE NOTES SET notetitle = #{note.notetitle}, notedescription = #{note.notedescription}, WHERE noteid = #{note.noteid}")
-    public Integer updateNote(Notes note);
+    @Update("UPDATE NOTES SET notetitle = #{title}, notedescription = #{description}, WHERE noteid = #{noteId}")
+    void updateNote(Integer noteId, String title, String description);
 }

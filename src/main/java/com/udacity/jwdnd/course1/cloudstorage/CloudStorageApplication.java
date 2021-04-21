@@ -11,8 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class CloudStorageApplication {
 
 	public static void main(String[] args) {
-
-		SpringApplication.run(CloudStorageApplication.class, args)
+		SpringApplication.run(CloudStorageApplication.class, args);
 	}
 
 	@Bean
