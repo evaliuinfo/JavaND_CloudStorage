@@ -4,16 +4,16 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CloudStorageApplicationTests {
-
 	@LocalServerPort
 	private int port;
 
-	private WebDriver driver;
+	protected WebDriver driver;
 
 	@BeforeAll
 	static void beforeAll() {
@@ -22,12 +22,12 @@ class CloudStorageApplicationTests {
 
 	@BeforeEach
 	public void beforeEach() {
-		this.driver = new ChromeDriver();
+		driver = new ChromeDriver();
 	}
 
 	@AfterEach
 	public void afterEach() {
-		if (this.driver != null) {
+		if (driver != null) {
 			driver.quit();
 		}
 	}
@@ -36,6 +36,23 @@ class CloudStorageApplicationTests {
 	public void getLoginPage() {
 		driver.get("http://localhost:" + this.port + "/login");
 		Assertions.assertEquals("Login", driver.getTitle());
+	}
+
+	protected HomePage signupAndLogin() {
+		driver.get("http://localhost:" + this.port + "/signup");
+		SignupPage signupPage = new SignupPage(driver);
+		signupPage.setFirstName("Eva");
+		signupPage.setLastName("Liu");
+		signupPage.setUserName("eliu");
+		signupPage.setPassword("PassWord");
+		signupPage.signUp();
+
+		driver.get("http://localhost:" + this.port + "/login");
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.setUserName("eliu");
+		loginPage.setPassword("PassWord");
+		loginPage.login();
+		return new HomePage(driver);
 	}
 
 }
