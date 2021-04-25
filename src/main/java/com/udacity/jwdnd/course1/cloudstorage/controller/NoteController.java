@@ -24,10 +24,8 @@ public class NoteController {
 
     @GetMapping
     public String getHomePage(
-            Authentication authentication, @ModelAttribute("newFile") FileForm newFile,
-            @ModelAttribute("newNote") NoteForm newNote,
-            @ModelAttribute("newCredential") CredentialForm newCredential,
-            Model model) {
+            Authentication authentication, @ModelAttribute("newFile") FileForm newFile, @ModelAttribute("newNote") NoteForm newNote,
+            @ModelAttribute("newCredential") CredentialForm newCredential, Model model) {
         String username = authentication.getName();
         Integer userId = userService.getUser(username).getUserId();
         model.addAttribute("note", this.noteService.getNoteListings(userId));
@@ -37,8 +35,7 @@ public class NoteController {
     @PostMapping("add-note")
     public String newNote(
             Authentication authentication, @ModelAttribute("newFile") FileForm newFile,
-            @ModelAttribute("newNote") NoteForm newNote,
-            @ModelAttribute("newCredential") CredentialForm newCredential,
+            @ModelAttribute("newNote") NoteForm newNote, @ModelAttribute("newCredential") CredentialForm newCredential,
             Model model) {
         String userName = authentication.getName();
         String newTitle = newNote.getTitle();
@@ -63,12 +60,9 @@ public class NoteController {
 
     @GetMapping(value = "/delete-note/{noteId}")
     public String deleteNote(
-            Authentication authentication, @PathVariable Integer noteId,
-            @ModelAttribute("newFile") FileForm newFile,
-            @ModelAttribute("newNote") NoteForm newNote,
-            @ModelAttribute("newCredential") CredentialForm newCredential,
-            Model model
-    ) {
+            Authentication authentication, @PathVariable Integer noteId, @ModelAttribute("newNote") NoteForm newNote,
+            @ModelAttribute("newFile") FileForm newFile, @ModelAttribute("newCredential") CredentialForm newCredential,
+            Model model) {
         noteService.deleteNote(noteId);
         String username = authentication.getName();
         Integer userId = userService.getUser(username).getUserId();

@@ -29,7 +29,7 @@ public class FileService {
         return fileMapper.getFileListings(userId);
     }
 
-    public void addFile(MultipartFile multipartFile, String userName) throws  IOException {
+    public void addFile(MultipartFile multipartFile, String userName) throws IOException {
         InputStream fis = multipartFile.getInputStream();
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         Integer nRead;
@@ -49,7 +49,8 @@ public class FileService {
     }
 
     public File getFile(String fileName) {
-        return fileMapper.getFile(fileName);
+        final File file = fileMapper.getFile(fileName);
+        return file;
     }
 
     public void deleteFile(String fileName) {

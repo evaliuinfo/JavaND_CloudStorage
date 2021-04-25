@@ -34,11 +34,9 @@ public class CredentialController {
 
     @GetMapping
     public String getHomePage(
-            Authentication authentication,
-            @ModelAttribute("newFile") FileForm newFile,
-            @ModelAttribute("newNote") NoteForm newNote,
+            Authentication authentication, @ModelAttribute("newFile") FileForm newFile,
             @ModelAttribute("newCredential") CredentialForm newCredential,
-            Model model) {
+            @ModelAttribute("newNote") NoteForm newNote, Model model) {
         String userName = authentication.getName();
         User user = userService.getUser(userName);
         model.addAttribute("credentials", this.credentialService.getCredentialListings(user.getUserId()));
@@ -48,11 +46,9 @@ public class CredentialController {
 
     @PostMapping("add-credential")
     public String newCredential(
-            Authentication authentication,
-            @ModelAttribute("newFile") FileForm newFile,
-            @ModelAttribute("newNote") NoteForm newNote,
+            Authentication authentication, @ModelAttribute("newFile") FileForm newFile,
             @ModelAttribute("newCredential") CredentialForm newCredential,
-            Model model) {
+            @ModelAttribute("newNote") NoteForm newNote, Model model) {
         String userName = authentication.getName();
         String newUrl = newCredential.getUrl();
         String credentialIdStr = newCredential.getCredentialId();
@@ -74,7 +70,7 @@ public class CredentialController {
         System.out.println("CredentialController username: " + userName);
         System.out.println("CredentialController password: " + encryptedPassword);
         System.out.println("CredentialController key: " + encodedKey);
-
+        System.out.println("CredentialController id: " + credentialIdStr);
 
         User user = userService.getUser(userName);
         model.addAttribute("credentials", credentialService.getCredentialListings(user.getUserId()));
@@ -91,10 +87,9 @@ public class CredentialController {
     @GetMapping(value = "/delete-credential/{credentialId}")
     public String deleteCredential(
             Authentication authentication, @PathVariable Integer credentialId,
-            @ModelAttribute("newFile") FileForm newFile,
-            @ModelAttribute("newNote") NoteForm newNote,
             @ModelAttribute("newCredential") CredentialForm newCredential,
-            Model model) {
+            @ModelAttribute("newFile") FileForm newFile,
+            @ModelAttribute("newNote") NoteForm newNote, Model model) {
         credentialService.deleteCredential(credentialId);
         String userName = authentication.getName();
         User user = userService.getUser(userName);

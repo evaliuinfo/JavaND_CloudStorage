@@ -31,9 +31,8 @@ public class HomeController {
     private EncryptionService encryptionService;
 
     public HomeController(
-            FileService fileService, UserService userService,
-            NoteService noteService, CredentialService credentialService,
-            EncryptionService encryptionService) {
+            FileService fileService, UserService userService, NoteService noteService,
+            CredentialService credentialService, EncryptionService encryptionService) {
         this.fileService = fileService;
         this.userService = userService;
         this.noteService = noteService;
@@ -43,10 +42,8 @@ public class HomeController {
 
     @GetMapping
     public String getHomePage(
-            Authentication authentication,
-            @ModelAttribute("newFile") FileForm newFile,
-            @ModelAttribute("newNote") NoteForm newNote,
-            @ModelAttribute("newCredential") CredentialForm newCredential,
+            Authentication authentication, @ModelAttribute("newFile") FileForm newFile,
+            @ModelAttribute("newNote") NoteForm newNote, @ModelAttribute("newCredential") CredentialForm newCredential,
             Model model) {
         Integer userId = getUserId(authentication);
         model.addAttribute("files", this.fileService.getFileListings(userId));
@@ -65,11 +62,8 @@ public class HomeController {
 
     @PostMapping
     public String newFile(
-            Authentication authentication,
-            @ModelAttribute("newFile") FileForm newFile,
-            @ModelAttribute("newNote") NoteForm newNote,
-            @ModelAttribute("newCredential") CredentialForm newCredential,
-            Model model) throws IOException {
+            Authentication authentication, @ModelAttribute("newFile") FileForm newFile,
+            @ModelAttribute("newNote") NoteForm newNote, @ModelAttribute("newCredential") CredentialForm newCredential, Model model) throws IOException {
         String userName = authentication.getName();
         Integer userId = getUserId(authentication);
         String[] fileListings = fileService.getFileListings(userId);
@@ -103,10 +97,8 @@ public class HomeController {
 
     @GetMapping(value = "/delete-file/{fileName}")
     public String deleteFile(
-            Authentication authentication, @PathVariable String fileName,
-            @ModelAttribute("newFile") FileForm newFile,
-            @ModelAttribute("newNote") NoteForm newNote,
-            @ModelAttribute("newCredential") CredentialForm newCredential,
+            Authentication authentication, @PathVariable String fileName, @ModelAttribute("newFile") FileForm newFile,
+            @ModelAttribute("newNote") NoteForm newNote, @ModelAttribute("newCredential") CredentialForm newCredential,
             Model model) {
         fileService.deleteFile(fileName);
         Integer userId = getUserId(authentication);

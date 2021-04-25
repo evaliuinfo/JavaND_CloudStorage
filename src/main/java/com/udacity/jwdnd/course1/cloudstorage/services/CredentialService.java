@@ -6,9 +6,6 @@ import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
-import java.util.stream.Collectors;
-
 @Service
 public class CredentialService {
     @Autowired
@@ -18,7 +15,7 @@ public class CredentialService {
     private UserMapper userMapper;
 
     public CredentialService(UserMapper userMapper, CredentialMapper credentialMapper) {
-        this.userMapper= userMapper;
+        this.userMapper = userMapper;
         this.credentialMapper = credentialMapper;
     }
 
@@ -40,6 +37,7 @@ public class CredentialService {
     }
 
     public Credential getCredential(Integer credentialId) {
+        System.out.println("Get Credential key is: " + credentialMapper.getCredential(credentialId).getKey());
         return credentialMapper.getCredential(credentialId);
     }
 

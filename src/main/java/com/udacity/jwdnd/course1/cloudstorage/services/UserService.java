@@ -12,10 +12,10 @@ import java.util.Base64;
 public class UserService {
 
     @Autowired
-    private final UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Autowired
-    private final HashService hashService;
+    private HashService hashService;
 
     public UserService(UserMapper userMapper, HashService hashService) {
         this.userMapper = userMapper;
