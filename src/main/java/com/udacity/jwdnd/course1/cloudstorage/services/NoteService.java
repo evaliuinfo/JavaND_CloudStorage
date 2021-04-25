@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NoteService {
-    @Autowired
-    private UserMapper userMapper;
 
-    @Autowired
-    private NoteMapper noteMapper;
+    private final UserMapper userMapper;
+    private final NoteMapper noteMapper;
 
     public NoteService(UserMapper userMapper, NoteMapper noteMapper) {
         this.userMapper = userMapper;

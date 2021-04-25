@@ -14,11 +14,8 @@ import java.io.InputStream;
 @Service
 public class FileService {
 
-    @Autowired
-    private FileMapper fileMapper;
-
-    @Autowired
-    private UserMapper userMapper;
+    private final FileMapper fileMapper;
+    private final UserMapper userMapper;
 
     public FileService(FileMapper fileMapper, UserMapper userMapper) {
         this.fileMapper = fileMapper;

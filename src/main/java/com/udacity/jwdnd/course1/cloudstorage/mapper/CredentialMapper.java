@@ -1,10 +1,13 @@
 package com.udacity.jwdnd.course1.cloudstorage.mapper;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
+import com.udacity.jwdnd.course1.cloudstorage.model.File;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface CredentialMapper {
+    @Select("SELECT * FROM CREDENTIALS")
+    Credential[] findAll();
 
     @Select("SELECT * FROM CREDENTIALS WHERE credentialid = #(credentialid)")
     Credential getCredential(Integer credentialid);

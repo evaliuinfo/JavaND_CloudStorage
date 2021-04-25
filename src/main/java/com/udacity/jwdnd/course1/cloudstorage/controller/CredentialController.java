@@ -60,12 +60,6 @@ public class CredentialController {
             Credential existingCredential = getCredential(Integer.parseInt(credentialIdStr));
             credentialService.updateCredential(existingCredential.getCredentialid(), newCredential.getUserName(), newUrl, encodedKey, encryptedPassword);
         }
-        System.out.println("CredentialController URL: " + newUrl);
-        System.out.println("CredentialController new credential username " + newCredential.getUserName());
-        System.out.println("CredentialController username: " + userName);
-        System.out.println("CredentialController password: " + encryptedPassword);
-        System.out.println("CredentialController key: " + encodedKey);
-        System.out.println("CredentialController id: " + credentialIdStr);
 
         User user = userService.getUser(userName);
         model.addAttribute("credentials", credentialService.getCredentialListings(user.getUserId()));
