@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class AuthenticationService implements AuthenticationProvider {
+public class    AuthenticationService implements AuthenticationProvider {
     private final UserMapper userMapper;
     private final HashService hashService;
 
@@ -34,6 +34,7 @@ public class AuthenticationService implements AuthenticationProvider {
                 return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
             }
         }
+
         return null;
     }
 
@@ -42,4 +43,3 @@ public class AuthenticationService implements AuthenticationProvider {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }
-

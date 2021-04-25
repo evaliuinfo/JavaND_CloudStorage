@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class CredentialService {
 
-    private final CredentialMapper credentialMapper;
     private final UserMapper userMapper;
+    private final CredentialMapper credentialMapper;
 
     public CredentialService(UserMapper userMapper, CredentialMapper credentialMapper) {
         this.userMapper = userMapper;
@@ -30,11 +30,11 @@ public class CredentialService {
         return credentialMapper.getCredential(credentialId);
     }
 
-    public void deleteCredential(Integer credentialid) {
-        credentialMapper.deleteCredentials(credentialid);
+    public void deleteCredential(Integer credentialId) {
+        credentialMapper.deleteCredentials(credentialId);
     }
 
-    public void updateCredential(Integer credentialId, String userName, String url, String key, String password) {
-        credentialMapper.updateCredential(credentialId, userName, url, key, password);
+    public void updateCredential(Integer credentialId, String newUserName, String url, String key, String password) {
+        credentialMapper.updateCredential(credentialId, newUserName, url, key, password);
     }
 }

@@ -4,7 +4,6 @@ import com.udacity.jwdnd.course1.cloudstorage.model.*;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +48,7 @@ public class CredentialController {
         String credentialIdStr = newCredential.getCredentialId();
         String password = newCredential.getPassword();
 
-        SecureRandom random  = new SecureRandom();
+        SecureRandom random = new SecureRandom();
         byte[] key = new byte[16];
         random.nextBytes(key);
         String encodedKey = Base64.getEncoder().encodeToString(key);
@@ -60,7 +59,6 @@ public class CredentialController {
             Credential existingCredential = getCredential(Integer.parseInt(credentialIdStr));
             credentialService.updateCredential(existingCredential.getCredentialid(), newCredential.getUserName(), newUrl, encodedKey, encryptedPassword);
         }
-
         User user = userService.getUser(userName);
         model.addAttribute("credentials", credentialService.getCredentialListings(user.getUserId()));
         model.addAttribute("encryptionService", encryptionService);

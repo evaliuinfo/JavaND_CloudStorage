@@ -45,7 +45,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -53,11 +53,11 @@ public class User {
         return firstName;
     }
 
-    public void setFirstName(String firstName){
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getLastName(){
+    public String getLastName() {
         return lastName;
     }
 

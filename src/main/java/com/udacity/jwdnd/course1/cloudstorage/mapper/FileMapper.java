@@ -12,7 +12,7 @@ public interface FileMapper {
     @Select("SELECT * FROM FILES WHERE filename = #{fileName}")
     File getFile(String fileName);
 
-    @Select("SELECT * FROM FILES WHERE userid = #{userId}")
+    @Select("SELECT filename FROM FILES WHERE userid = #{userId}")
     String[] getFileListings(Integer userId);
 
     @Insert("INSERT INTO FILES (filename, contenttype, filesize, userid, filedata) VALUES(#{fileName}, #{contentType}, #{fileSize}, #{userId}, #{fileData})")
