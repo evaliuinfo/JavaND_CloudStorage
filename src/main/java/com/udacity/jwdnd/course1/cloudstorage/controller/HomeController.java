@@ -2,7 +2,6 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.*;
 import com.udacity.jwdnd.course1.cloudstorage.services.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -64,7 +63,7 @@ public class HomeController {
 
         boolean fileIsDuplicate = false;
         for (String fileListing: fileListings) {
-            if (fileListing.equals(fileName))  {
+            if (fileListing.equals(fileName)) {
                 fileIsDuplicate = true;
                 break;
             }
@@ -81,7 +80,10 @@ public class HomeController {
         return "result";
     }
 
-    @GetMapping(value = "/get-file/{filename}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(
+            value = "/get-file/{fileName}",
+            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+    )
     public @ResponseBody
     byte[] getFile(@PathVariable String fileName) {
         return fileService.getFile(fileName).getFileData();
