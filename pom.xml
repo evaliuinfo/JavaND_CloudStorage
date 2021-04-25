@@ -15,7 +15,7 @@
     <description>Final Project for Udacity's Spring Boot Basics course.</description>
 
     <properties>
-        <java.version>16</java.version>
+        <java.version>14</java.version>
     </properties>
 
     <dependencies>
@@ -48,12 +48,6 @@
             <scope>runtime</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

@@ -13,18 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-@Controller()
+@Controller
 @RequestMapping("credential")
 public class CredentialController {
 
-    @Autowired
-    private CredentialService credentialService;
-
-    @Autowired
-    private EncryptionService encryptionService;
-
-    @Autowired
-    private UserService userService;
+    private final CredentialService credentialService;
+    private final EncryptionService encryptionService;
+    private final UserService userService;
 
     public CredentialController(CredentialService credentialService, EncryptionService encryptionService, UserService userService) {
         this.credentialService = credentialService;

@@ -9,13 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller()
+@Controller
 @RequestMapping("note")
 public class NoteController {
-    @Autowired
-    private NoteService noteService;
-    @Autowired
-    private UserService userService;
+    private final NoteService noteService;
+    private final UserService userService;
 
     public NoteController(NoteService noteService, UserService userService) {
         this.noteService = noteService;

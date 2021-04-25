@@ -15,20 +15,12 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/home")
 public class HomeController {
-    @Autowired
-    private FileService fileService;
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private NoteService noteService;
-
-    @Autowired
-    private CredentialService credentialService;
-
-    @Autowired
-    private EncryptionService encryptionService;
+    private final FileService fileService;
+    private final UserService userService;
+    private final NoteService noteService;
+    private final CredentialService credentialService;
+    private final EncryptionService encryptionService;
 
     public HomeController(
             FileService fileService, UserService userService, NoteService noteService,
