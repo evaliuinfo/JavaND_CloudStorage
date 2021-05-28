@@ -1,7 +1,17 @@
 # Deployment Runbook for Cloud Storage
 
-SuperDuperDrive Cloud Storage is an online web application supports user to upload/download/remove files via web interface, also has features to manage user personal information like credentials and notes. Application can be tested via localhost:8080 once it is fully deployed.
+SuperDuperDrive Cloud Storage is an online web application supports user to upload/download/remove files via web interface, also has features to manage user personal information like credentials and notes. 
+
+Application can be tested via localhost:8080 once it is fully deployed.
+
 This deployment runbook contains all the details for deploying Cloud Storage via Docker image.
+
+## Content
+
+1. [Pre-requisites](#pre-requisites)
+2. [Deployment Process](#deployment-process)
+3. [Deployment via AWS ECR](#deployment-via-aws-ecr)
+
 
 ## 1. Pre-requisites
 
