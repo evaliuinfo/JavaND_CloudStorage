@@ -8,9 +8,9 @@ This deployment runbook contains all the details for deploying Cloud Storage via
 
 ## Content
 
-1. [Pre-requisites](#pre-requisites)
-2. [Deployment Process](#deployment-process)
-3. [Deployment via AWS ECR](#deployment-via-aws-ecr)
+1. [Pre-requisites](#1-pre-requisites)
+2. [Deployment Process](#2-deployment-process)
+3. [Deployment via AWS ECR](#3-deployment-via-aws-ecr)
 
 
 ## 1. Pre-requisites
