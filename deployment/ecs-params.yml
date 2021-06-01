@@ -1,0 +1,16 @@
+version: 1
+task_definition:
+  task_execution_role: AWSInfraEcsTaskExecutionRole
+  ecs_network_mode: awsvpc
+  task_size:
+    mem_limit: 0.5GB
+    cpu_shares: 100
+run_params:
+  network_configuration:
+    awsvpc_configuration:
+      subnets:
+        - subnet-0644e047a7619f15a
+        - subnet-0ff81dd561737a749
+      security_groups:
+        - sg-0388ba6a402da06e5
+
