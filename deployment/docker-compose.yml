@@ -3,7 +3,6 @@ services:
   web:
     image: 450566581442.dkr.ecr.us-west-2.amazonaws.com/cloud-storage:1.0-SNAPSHOT
     ports:
-      - "80:80"
       - "8080:8080"
     logging:
       driver: awslogs
