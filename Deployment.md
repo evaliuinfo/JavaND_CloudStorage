@@ -28,7 +28,7 @@ First, create the Docker image based on current repository:
 docker build -t localrepo/docker-build-cloudstorage:1.0-SNAPSHOT .
 ```
 
-Or can pull the image from dockerhub:
+Or pull the image from dockerhub:
 ```
 docker pull evaliuinfo/docker-normal-build-cloudstorage
 ```
@@ -52,5 +52,77 @@ docker stop cloudstorage
 
 ## 3. Deployment via AWS ECR
 
-TBD
+### 3.1 Prepare ECR Repository
 
+```
+cd deployment/
+./create_ecr_repo.sh <aws profile> <aws region>
+```
+
+### 3.2 Set up ECS IAM Roles
+
+```
+./create_ecs_task_role.sh <aws profile> <aws region>
+```
+
+### 3.3 Configure ECS
+
+First need to configure ECS CLI profile using AWS access key and secret key:
+```
+ecs-cli configure profile --access-key AWS_ACCESS_KEY_ID --secret-key AWS_SECRET_ACCESS_KEY --profile-name cloud-profile
+```
+
+Prepare ECS Cluster:
+```
+./create_cluster.sh <aws region>
+```
+
+### 3.4 Deploy Cloud Storage to ECS Cluster
+
+Make sure update the docker-compose.yml file according to your images on ECR:
+```yaml
+version: '3'
+services:
+  web:
+    image: {AWS_Account_Id}.dkr.ecr.us-west-2.amazonaws.com/cloud-storage-repo
+    ports:
+      - "8080:8080"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: cloud-storage-aws-ecs
+        awslogs-region: us-west-2
+        awslogs-stream-prefix: web
+```
+
+Update the ecs-params.yml file based on VPC subnets and Security Group created in step 3.3:
+```yaml
+version: 1
+task_definition:
+  task_execution_role: ecsTaskExecutionRole
+  ecs_network_mode: awsvpc
+  task_size:
+    mem_limit: 0.5GB
+    cpu_limit: 256
+run_params:
+  network_configuration:
+    awsvpc_configuration:
+      subnets:
+        - {Public_Subnet1_ID}
+        - {Public_Subnet2_ID}
+      security_groups:
+        - {Security_Group_ID}
+      assign_public_ip: ENABLED
+```
+
+Then, deploy to ECS Cluster:
+```bash
+ecs-cli compose --project-name cloud-storage service up --create-log-groups --cluster-config cloud-storage --ecs-profile cloud-profile
+```
+
+Then get the service web IP from cli:
+```bash
+ecs-cli compose --project-name cloud-storage service ps --cluster-config cloud-storage --ecs-profile cloud-profile
+```
+
+Service can be tested by visit: http://{Public_IP_From_Previous_Step}:8080/

@@ -8,7 +8,7 @@ else
 fi
 
 echo "Create ECS Fargate Cluster"
-ecs-cli configure ${Region} --cluster cloud-storage --default-launch-type FARGATE --config-name cloud-storage --region us-west-2
+ecs-cli configure ${Region} --cluster cloud-storage --default-launch-type FARGATE --config-name cloud-storage 
 ecs-cli up --cluster-config cloud-storage --ecs-profile cloud-profile > out.log
 
 VpcId=`cat out.log | grep "VPC" | awk -F ' ' '{print $3}'`
